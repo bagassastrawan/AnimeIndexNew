@@ -1,5 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/navbar";
+import Carousel from "./components/carosel/index";
+// import QuerySearch from "@/app/(routes)/search/[query]/page";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +26,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar />
+        <Carousel />
+        {/* <QuerySearch /> */}
         {children}
       </body>
     </html>
