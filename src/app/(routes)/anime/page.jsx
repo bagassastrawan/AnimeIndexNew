@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const indonesianDays = {
@@ -25,7 +26,6 @@ export default function AnimePage() {
                 const res = await fetch(`https://api.jikan.moe/v4/schedules/${selectedDay}`);
                 const data = await res.json();
 
-                // Ambil 10 anime paling populer (urutkan berdasarkan popularity)
                 const sorted = data.data
                     .filter(anime => anime.popularity !== null)
                     .sort((a, b) => a.popularity - b.popularity)
@@ -83,25 +83,27 @@ export default function AnimePage() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {animeList.map(anime => (
-                            <div key={anime.id} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 hover:border-red-500 transition-colors">
-                                <div className="flex">
-                                    <div className="w-1/3">
-                                        <img
-                                            src={anime.image}
-                                            alt={anime.title}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="w-2/3 p-4">
-                                        <h3 className="font-bold text-white text-lg mb-1">{anime.title}</h3>
-                                        <p className="text-gray-300 text-sm mb-1">{anime.episode}</p>
-                                        <p className="text-yellow-400 text-sm mb-1">{anime.score}</p>
-                                        <p className="text-gray-400 text-xs">
-                                            <span className="font-medium">Popularitas:</span> #{anime.popularity}
-                                        </p>
+                            <Link key={anime.id} href={`/details/${anime.id}`}>
+                                <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 hover:border-red-500 transition-colors">
+                                    <div className="flex">
+                                        <div className="w-1/3">
+                                            <img
+                                                src={anime.image}
+                                                alt={anime.title}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div className="w-2/3 p-4">
+                                            <h3 className="font-bold text-white text-lg mb-1">{anime.title}</h3>
+                                            <p className="text-gray-300 text-sm mb-1">{anime.episode}</p>
+                                            <p className="text-yellow-400 text-sm mb-1">{anime.score}</p>
+                                            <p className="text-gray-400 text-xs">
+                                                <span className="font-medium">Popularitas:</span> #{anime.popularity}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 )}

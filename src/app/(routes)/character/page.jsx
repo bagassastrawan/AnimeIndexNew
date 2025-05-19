@@ -58,7 +58,7 @@ const Page = () => {
             <h2 className="text-3xl font-bold mb-4">Top Character</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-4 mb-10">
                 {topCharacters.map((char) => (
-                    <Link key={char.mal_id} href={`/details/character/${char.mal_id}`}>
+                    <Link key={char.mal_id} href={`/character/${char.mal_id}`}>
                         <div className="border border-white bg-gray-900 rounded-lg overflow-hidden hover:-translate-y-2 transition-transform shadow">
                             <img
                                 src={char.images?.jpg?.image_url}
@@ -82,7 +82,7 @@ const Page = () => {
                         ></div>
                     ))
                     : characters.map((char) => (
-                        <Link key={char.mal_id} href={`/details/character/${char.mal_id}`}>
+                        <Link key={char.mal_id} href={`/character/${char.mal_id}`}>
                             <div className="border border-white bg-gray-900 rounded-lg overflow-hidden hover:-translate-y-2 transition-transform shadow">
                                 <img
                                     src={char.images?.jpg?.image_url}

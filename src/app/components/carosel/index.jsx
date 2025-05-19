@@ -58,7 +58,7 @@ export default function Carousel() {
     const { id, title, rating, image } = slides[currentIndex];
 
     return (
-        <div className="relative w-full h-[500px] overflow-hidden rounded-xl shadow-lg">
+        <div className="relative w-full h-[500px] overflow-hidden shadow-lg">
             <Image
                 src={image}
                 alt={title}
