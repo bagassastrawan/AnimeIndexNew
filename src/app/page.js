@@ -17,14 +17,41 @@ const Home = () => {
           fetch('https://api.jikan.moe/v4/seasons/now'),
         ])
 
-        if (!topRes.ok || !latestRes.ok) throw new Error('Gagal memuat data')
+        // Log response status dan OK status
+        console.log('Top Anime Response Status:', topRes.status, 'OK:', topRes.ok);
+        console.log('Latest Anime Response Status:', latestRes.status, 'OK:', latestRes.ok);
 
-        const topData = await topRes.json()
-        const latestData = await latestRes.json()
+        if (!topRes.ok) {
+          const errorText = await topRes.text(); // Coba baca body error
+          console.error('Top Anime Fetch Error Body:', errorText);
+          throw new Error(`Gagal memuat Top Anime: Status ${topRes.status}`);
+        }
+        if (!latestRes.ok) {
+          const errorText = await latestRes.text(); // Coba baca body error
+          console.error('Latest Anime Fetch Error Body:', errorText);
+          throw new Error(`Gagal memuat Anime Terbaru: Status ${latestRes.status}`);
+        }
+
+        const topData = await topRes.json();
+        const latestData = await latestRes.json();
+
+        // Log data yang diterima
+        console.log('Fetched Top Anime Data:', topData);
+        console.log('Fetched Latest Anime Data:', latestData);
+
+        // Periksa apakah data.data ada dan merupakan array
+        if (!topData.data || !Array.isArray(topData.data)) {
+          throw new Error('Struktur data Top Anime tidak valid');
+        }
+        if (!latestData.data || !Array.isArray(latestData.data)) {
+          throw new Error('Struktur data Latest Anime tidak valid');
+        }
+
 
         setTopAnime(topData.data.slice(0, 10))
         setLatestAnime(latestData.data.slice(0, 10))
       } catch (err) {
+        console.error('Error fetching anime data:', err); // Log error lengkap
         setError(err.message)
       } finally {
         setLoading(false)
@@ -39,7 +66,7 @@ const Home = () => {
       <h1 className="text-4xl font-bold mb-8 text-center">AnimeIndex</h1>
 
       {loading && <p className="text-center text-gray-300">Memuat data...</p>}
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      {error && <p className="text-red-500 text-center">Error: {error}</p>} {/* Tampilkan pesan error */}
 
       {!loading && !error && (
         <>

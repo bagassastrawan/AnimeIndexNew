@@ -28,7 +28,6 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         <Carousel />
-        {/* <QuerySearch /> */}
         {children}
       </body>
     </html>
